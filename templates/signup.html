@@ -1,0 +1,127 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecureLogin - Signup</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#000000,#111827,#1f2937);
+        }
+
+        .signup-box{
+            width:350px;
+            padding:40px;
+            background:rgba(17,24,39,0.95);
+            border:1px solid #374151;
+            border-radius:15px;
+            box-shadow:0 0 25px rgba(0,150,255,0.2);
+        }
+
+        h1{
+            color:#38bdf8;
+            text-align:center;
+            margin-bottom:30px;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin-top:15px;
+            background:#111827;
+            border:1px solid #4b5563;
+            border-radius:8px;
+            color:white;
+            outline:none;
+        }
+
+        input:focus{
+            border:1px solid #38bdf8;
+            box-shadow:0 0 10px rgba(56,189,248,0.4);
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            margin-top:25px;
+            background:#38bdf8;
+            color:black;
+            border:none;
+            border-radius:8px;
+            font-weight:bold;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:#0ea5e9;
+        }
+
+        a{
+            color:#38bdf8;
+            text-decoration:none;
+        }
+
+        .footer{
+            text-align:center;
+            margin-top:20px;
+            color:#9ca3af;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="signup-box">
+
+        <h1>Create Account</h1>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div style="
+                color:#38bdf8;
+                text-align:center;
+                font-size:14px;
+                margin-bottom:10px;
+            ">
+              {% for msg in messages %}
+                <p>{{ msg }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+
+        <form method="post">>
+ 
+            <input type="text" name="username" placeholder="Username">
+
+            <input type="email" name="email" placeholder="Email">
+
+            <input type="password" name="password" placeholder="Password">
+
+            <button type="submit">SIGN UP</button>
+
+        </form>
+
+        <div class="footer">
+            Already have account?
+            <a href="/">Login</a>
+        </div>
+
+    </div>
+
+</body>
+</html>
