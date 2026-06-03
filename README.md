@@ -55,7 +55,31 @@ It detects and protects against:
 ---
 
 ## 📸 Screenshots
-(Add your screenshots folder here)
+## 📸 Screenshots
+
+### 🔐 Login Page
+![Login](screenshots/login.png)
+
+### 📝 Signup Page
+![Signup](screenshots/signup.png)
+
+### 📊 Dashboard
+![Dashboard](screenshots/dashboard.png)
+
+### 🧠 Attack History
+![Attack History](screenshots/attack_history.png)
+
+### 📡 Live Logs
+![Live Logs](screenshots/live_logs.png)
+
+### 🚨 IP Tracker
+![IP Tracker](screenshots/ip_tracker.png)
+
+### 🔥 Risk Score Monitoring
+![Risk Score](screenshots/risk_score.png)
+
+### 🚫 IP Blocked Screen
+![IP Blocked](screenshots/ip_blocked.png)
 
 ---
 
