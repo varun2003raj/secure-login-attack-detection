@@ -1,0 +1,205 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>MASTER SOC DASHBOARD</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #0b1220;
+            color: white;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #111827;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #1f2937;
+            height: 360px;
+            overflow: auto;
+        }
+
+        .title {
+            color: #38bdf8;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        th, td {
+            border-bottom: 1px solid #1f2937;
+            padding: 6px;
+            text-align: center;
+        }
+
+        th {
+            color: #38bdf8;
+        }
+
+        .ok { color: #22c55e; }
+        .bad { color: #ef4444; }
+    </style>
+</head>
+
+<body>
+
+<h1>🛡️ MASTER SOC DASHBOARD</h1>
+
+<!-- FLASH ALERTS -->
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+        {% for msg in messages %}
+            alert("{{ msg }}");
+        {% endfor %}
+    </script>
+  {% endif %}
+{% endwith %}
+
+<div class="grid">
+
+    <!-- LIVE LOGS -->
+    <div class="card">
+        <div class="title">📡 LIVE LOGS</div>
+
+        <table>
+            <tr>
+                <th>User</th>
+                <th>IP</th>
+                <th>Status</th>
+                <th>Date</th>
+                <th>Time</th>
+            </tr>
+
+            {% for log in logs %}
+            <tr>
+                <td>{{ log.username }}</td>
+                <td>{{ log.ip_address }}</td>
+                <td class="{{ 'ok' if log.status=='success' else 'bad' }}">
+                    {{ log.status }}
+                </td>
+                <td>{{ log.timestamp.strftime('%Y-%m-%d') }}</td>
+                <td>{{ log.timestamp.strftime('%H:%M:%S') }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- IP TRACKER -->
+    <div class="card">
+        <div class="title">🔒 IP TRACKER</div>
+
+        <table>
+            <tr>
+                <th>IP</th>
+                <th>Fail</th>
+                <th>Success</th>
+                <th>Status</th>
+            </tr>
+
+            {% for ip, data in ip_tracker.items() %}
+            <tr>
+                <td>{{ ip }}</td>
+                <td>{{ data.fail }}</td>
+                <td>{{ data.success }}</td>
+                <td>
+                    {% if ip in blocked_ips %}
+                        <span style="color:red;">BLOCKED</span>
+                    {% else %}
+                        <span style="color:#22c55e;">SAFE</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- RISK SCORES -->
+    <div class="card">
+        <div class="title">⚠️ RISK SCORES</div>
+
+        <table>
+            <tr>
+                <th>IP</th>
+                <th>Score</th>
+                <th>Level</th>
+            </tr>
+
+            {% for ip, score in risk_score.items() %}
+            <tr>
+                <td>{{ ip }}</td>
+                <td><b>{{ score }}</b></td>
+
+                <td>
+                    {% if score >= 80 %}
+                        🔴 CRITICAL
+                    {% elif score >= 50 %}
+                        🟠 HIGH
+                    {% elif score >= 20 %}
+                        🟡 MEDIUM
+                    {% else %}
+                        🟢 LOW
+                    {% endif %}
+                </td>
+            </tr>
+
+            {% if risk_reasons.get(ip) %}
+            <tr>
+                <td colspan="3" style="text-align:left; color:#facc15; font-size:12px;">
+                    <b>Reasons:</b>
+                    <ul style="margin:5px 0 0 20px;">
+                        {% for r in risk_reasons[ip] %}
+                            <li>{{ r }}</li>
+                        {% endfor %}
+                    </ul>
+                </td>
+            </tr>
+            {% endif %}
+
+            {% endfor %}
+        </table>
+    </div>
+
+    <!-- ATTACK HISTORY -->
+    <div class="card">
+        <div class="title">🚨 ATTACK HISTORY</div>
+
+        {% if attack_history %}
+            {% for ip, attacks in attack_history.items() %}
+                <b>{{ ip }}</b><br><br>
+
+                {% for a in attacks %}
+                    • {{ a["type"] }} — {{ a["time"] }}<br>
+                {% endfor %}
+
+                <br>
+            {% endfor %}
+        {% else %}
+            <p style="color:gray;">No attacks detected yet</p>
+        {% endif %}
+    </div>
+
+</div>
+
+</body>
+</html>
