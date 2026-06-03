@@ -1,0 +1,82 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SOC Logs Dashboard</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #0f172a;
+            color: white;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #38bdf8;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+            background: #111827;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #1f2937;
+        }
+
+        th {
+            background: #1e293b;
+            color: #38bdf8;
+        }
+
+        tr:hover {
+            background: #1f2937;
+        }
+
+        .success {
+            color: #22c55e;
+            font-weight: bold;
+        }
+
+        .fail {
+            color: #ef4444;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h2>🛡️ SOC LOGS DASHBOARD</h2>
+
+    <table>
+        <tr>
+            <th>Username</th>
+            <th>IP</th>
+            <th>Status</th>
+            <th>Message</th>
+            <th>Time</th>
+        </tr>
+
+        {% for log in logs %}
+        <tr>
+            <td>{{ log.username }}</td>
+            <td>{{ log.ip_address }}</td>
+            <td class="{{ log.status }}">{{ log.status }}</td>
+            <td>{{ log.message }}</td>
+            <td>{{ log.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</body>
+</html>
