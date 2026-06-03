@@ -1,0 +1,141 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SecureLogin</title>
+
+    <style>
+
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:Arial;
+        }
+
+        body{
+            height:100vh;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            background:linear-gradient(135deg,#111827,#1f2937,#000000);
+        }
+
+        .login-box{
+            width:350px;
+            padding:40px;
+            background:rgba(17,24,39,0.95);
+            border:1px solid #374151;
+            border-radius:15px;
+            box-shadow:0 0 25px rgba(0,255,150,0.2);
+        }
+
+        h1{
+            color:#00ff99;
+            text-align:center;
+            margin-bottom:30px;
+            letter-spacing:1px;
+        }
+
+        input{
+            width:100%;
+            padding:12px;
+            margin-top:15px;
+            background:#111827;
+            border:1px solid #4b5563;
+            border-radius:8px;
+            color:white;
+            outline:none;
+        }
+
+        input:focus{
+            border:1px solid #00ff99;
+            box-shadow:0 0 10px rgba(0,255,153,0.4);
+        }
+
+        button{
+            width:100%;
+            padding:12px;
+            margin-top:25px;
+            background:#00ff99;
+            color:black;
+            border:none;
+            border-radius:8px;
+            font-weight:bold;
+            cursor:pointer;
+            transition:0.3s;
+        }
+
+        button:hover{
+            background:#00cc77;
+            transform:scale(1.03);
+        }
+
+        .footer{
+            color:#9ca3af;
+            text-align:center;
+            margin-top:20px;
+            font-size:14px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="login-box">
+
+        <h1>SecureLogin</h1>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div style="
+                color:#ff4d4d;
+                text-align:center;
+                font-size:14px;
+                margin-bottom:10px;
+            ">
+              {% for msg in messages %}
+                <p>{{ msg }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+        <form method="post">
+
+            <input type="text" name="username" placeholder="Username">
+
+            <input type="password" name="password" placeholder="Password">
+
+            <p style="color:white; margin-top:15px;">
+                CAPTCHA: {{ captcha }}
+            </p>
+
+            <input
+                type="text"
+                name="captcha_answer"
+                placeholder="Enter CAPTCHA Answer"
+            >
+
+
+            <button type="submit">LOGIN</button>
+
+            <p style="color:white; text-align:center; margin-top:15px;">
+                Don't have an account?
+                <a href="/signup" style="color:#00ff99; text-decoration:none;">
+                    Sign Up
+                </a>
+            </p>
+
+        </form>
+
+        <div class="footer">
+            Authentication Monitoring System
+        </div>
+
+    </div>
+
+</body>
+</html>
+                               
